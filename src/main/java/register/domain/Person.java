@@ -24,12 +24,6 @@ import javax.persistence.DiscriminatorType;
 @Table(name="ro_person")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="sex", discriminatorType= DiscriminatorType.INTEGER)
-@NamedQueries({
-	@NamedQuery(name = "Person.findPersons",
-			query="SELECT p FROM Person p "
-					+ "LEFT JOIN FETCH p.passports "
-					+ "LEFT JOIN FETCH p.birthCertificate ")
-})
 public abstract class Person {
 	
 	@Id

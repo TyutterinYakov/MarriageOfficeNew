@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import register.business.MarriageService;
 import register.view.MarriageRequest;
 import register.view.MarriageResponse;
-import university.view.StudentRequest;
 
 
 
@@ -35,7 +34,7 @@ public class MarriageController {
 	@ResponseBody
 	public MarriageResponse findMarriageCertificate(@RequestBody MarriageRequest request) {
 //		logger.info("findMarriageCertificate called");
-		return marriageService.findMarriageCertificate(null);
+		return marriageService.findMarriageCertificate(request);
 	}
 	
 //	@PostMapping(path="/checkChild", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
