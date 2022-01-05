@@ -37,10 +37,4 @@ public class MarriageController {
 		return marriageService.findMarriageCertificate(request);
 	}
 	
-//	@PostMapping(path="/checkChild", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	@ResponseBody
-//	public MarriageResponse findChildCertificate() {
-////		logger.info("findMarriageCertificate called");
-//		return marriageService.findMarriageCertificate(null); //TODO
-//	}
 }

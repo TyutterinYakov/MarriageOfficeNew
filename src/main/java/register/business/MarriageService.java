@@ -1,5 +1,7 @@
 package register.business;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,9 @@ import register.dao.BirthCertificateRepository;
 import register.dao.MarriageCertificateRepository;
 import register.dao.PassportRepository;
 import register.dao.PersonRepository;
+import register.domain.BirthCertificate;
+import register.domain.ChildRequest;
+import register.domain.ChildResponse;
 import register.domain.MarriageCertificate;
 import register.domain.Passport;
 import register.domain.Person;
@@ -72,21 +77,38 @@ public class MarriageService {
 			}
 		}
 		if(response.isExistingFather()&&response.isExistingMother()) {
-		Optional<MarriageCertificate> marriageCertificate = marriageDao.findMarriageCertifficate(
-				request.getMarriageCertificateNumber(),
-				request.getMarriageCertificateDate(),
-				husbandId,
-				wifeId
-				
-				
-				);
-		if(marriageCertificate.isPresent()) {
-			MarriageCertificate mc = marriageCertificate.get();
-			if(mc.getEndDate()==null) {
-				response.setExistingMarriage(true);
+			if(!request.getChilds().isEmpty()) {
+				List<ChildResponse> list = new LinkedList<>();
+				for(ChildRequest child: request.getChilds()) {
+					Optional<Person> ch = personDao.findPerson(child.getFirstName(), child.getLastName(), child.getPatronymic(), child.getDateOfBirth());
+					if(ch.isPresent()) {
+						Optional<BirthCertificate> birth = birthDao.findBirthCertificate(child.getNumberCertificate(), child.getIssueDate(), husbandId, wifeId, ch.get().getPersonId());
+						if(birth.isPresent()) {
+							ChildResponse resp = new ChildResponse();
+							resp.setName(child.getFirstName());
+							resp.setCheckChild(true);
+							list.add(resp);
+						}
+					}
+				}
+				response.setChilds(list);
+				}
+			Optional<MarriageCertificate> marriageCertificate = marriageDao.findMarriageCertifficate(
+					request.getMarriageCertificateNumber(),
+					request.getMarriageCertificateDate(),
+					husbandId,
+					wifeId
+					
+					
+					);
+			if(marriageCertificate.isPresent()) {
+				MarriageCertificate mc = marriageCertificate.get();
+				if(mc.getEndDate()==null) {
+					response.setExistingMarriage(true);
+				}
 			}
 		}
-		}
+
 		
 		
 		return response;

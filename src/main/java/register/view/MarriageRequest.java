@@ -2,10 +2,12 @@ package register.view;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import register.domain.ChildRequest;
 import register.util.LocalDateStringConverter;
 import register.util.StringLocalDateConverter;
 
@@ -41,6 +43,13 @@ public class MarriageRequest implements Serializable
 	@JsonSerialize(converter = LocalDateStringConverter.class)
 	@JsonDeserialize(converter = StringLocalDateConverter.class)
 	private LocalDate marriageCertificateDate;
+	private List<ChildRequest> childs;
+	public List<ChildRequest> getChilds() {
+		return childs;
+	}
+	public void setChilds(List<ChildRequest> childs) {
+		this.childs = childs;
+	}
 	public String getHusbandSurName() {
 		return husbandSurName;
 	}
