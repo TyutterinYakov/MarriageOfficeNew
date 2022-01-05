@@ -23,7 +23,7 @@ import javax.persistence.DiscriminatorType;
 @Entity
 @Table(name="ro_person")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="sex", discriminatorType= DiscriminatorType.INTEGER)
+@DiscriminatorColumn(name="sex", discriminatorType= DiscriminatorType.INTEGER)  ///2-husband 1-wife
 public abstract class Person {
 	
 	@Id

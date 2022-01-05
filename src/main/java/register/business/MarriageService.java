@@ -72,15 +72,17 @@ public class MarriageService {
 			}
 		}
 		if(response.isExistingFather()&&response.isExistingMother()) {
-		Optional<MarriageCertificate> marriageCertificate = marriageDao.findByWifeAndHusbandAndIssueDateAndNumber(
-				wifeId,
-				husbandId,
+		Optional<MarriageCertificate> marriageCertificate = marriageDao.findMarriageCertifficate(
+				request.getMarriageCertificateNumber(),
 				request.getMarriageCertificateDate(),
-				request.getMarriageCertificateNumber()
+				husbandId,
+				wifeId
+				
+				
 				);
 		if(marriageCertificate.isPresent()) {
 			MarriageCertificate mc = marriageCertificate.get();
-			if(mc.getEndDate()==null&&mc.isActive()) {
+			if(mc.getEndDate()==null) {
 				response.setExistingMarriage(true);
 			}
 		}
